@@ -16,7 +16,7 @@ const startServer = () => {
   // Middlewares
   app.use(
     cors({
-      origin: "http://localhost:3000",
+      origin: env.ORIGIN,
       credentials: true,
     })
   );
@@ -26,7 +26,9 @@ const startServer = () => {
 
   // Routes
   app.get("/test", async (req: express.Request, res: express.Response) => {
-    res.send("<h1>Test Api</h1>");
+    res.json({
+      message: "Test API passed!",
+    });
   });
 
   app.use("/api/v1", router());
@@ -39,7 +41,7 @@ const startServer = () => {
 
   server.listen(env.APP_PORT, () =>
     console.log(
-      `3. Server is running on port http://${env.APP_HOST}:${env.APP_PORT}/`
+      `3. Server is running on http://${env.APP_HOST}:${env.APP_PORT}/`
     )
   );
 };
