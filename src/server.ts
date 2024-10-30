@@ -4,6 +4,7 @@ import http from "http";
 import cookieParser from "cookie-parser";
 import compression from "compression";
 import cors from "cors";
+import { StatusCodes } from "http-status-codes";
 
 import { env } from "./config/environment";
 import { connectDb } from "./config/mongodb";
@@ -25,11 +26,14 @@ const startServer = () => {
   app.use(express.json());
 
   // Routes
-  app.get("/test", async (req: express.Request, res: express.Response) => {
-    res.json({
-      message: "Test API passed!",
-    });
-  });
+  app.get(
+    "/health-check",
+    async (req: express.Request, res: express.Response) => {
+      res.status(StatusCodes.OK).json({
+        message: "Healthcheck API passed!",
+      });
+    }
+  );
 
   app.use("/api/v1", router());
 
