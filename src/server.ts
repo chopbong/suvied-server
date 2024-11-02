@@ -1,5 +1,6 @@
 import "dotenv/config";
 import express from "express";
+import path from "path";
 import http from "http";
 import cookieParser from "cookie-parser";
 import compression from "compression";
@@ -13,6 +14,9 @@ import router from "./routes";
 
 const startServer = () => {
   const app = express();
+
+  // Serve static files from the public directory
+  app.use(express.static(path.join(__dirname, "public")));
 
   // Middlewares
   app.use(
