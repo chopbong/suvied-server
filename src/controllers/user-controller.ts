@@ -22,4 +22,23 @@ const getOneUserByEmail = async (
   }
 };
 
-export default { getOneUserByEmail };
+const updateOneUserByEmail = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { email } = req.params;
+
+    const updatedUser = await userService.updateOneUserByEmail(email, req.body);
+
+    return res.status(StatusCodes.OK).json({
+      success: true,
+      updatedUser,
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+export default { getOneUserByEmail, updateOneUserByEmail };
